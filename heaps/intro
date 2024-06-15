@@ -6,5 +6,5 @@
 reduces the brute force complexity from nlogn to nlogk
 k bcoz at a time we are sorting only k elements
 min heap:
-priority_queue<int, vector<int>, greatest<int>> pq;
+priority_queue<int, vector<int>, greater<int>> pq;
     
