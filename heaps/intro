@@ -1,0 +1,9 @@
+ Identification:
+ --it has a K(size)
+ --it asks something related to sallest/largest
+   k+smallest->max heap
+   k+largest->min heap
+reduces the brute force complexity from nlogn to nlogk
+k bcoz at a time we are sorting only k elements
+
+    
