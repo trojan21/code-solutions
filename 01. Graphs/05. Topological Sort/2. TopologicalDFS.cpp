@@ -1,33 +1,37 @@
-  bool dfs(unordered_map<int,vector<int>> &graph, int node, vector<int> &visited, vector<int>& arrangedCourses, int& i, vector<int>& family) {
-        visited[node] = 1;
-        family[node] = 1;
-        for(int nbr : graph[node]) {
-            if(family[nbr] == 1) {
-                return true;
-            } else if(visited[nbr] == 0) {
-                if(dfs(graph, nbr, visited, arrangedCourses, i, family)) return true;
-            }
-        }
-        arrangedCourses[i--] = node;
-        family[node] = 0;
-        return false;
-    }
+#include <bits/stdc++.h>
+using namespace std;
 
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+class Solution {
+private:
+	void dfs(int node, int vis[], stack<int> &st,
+	         vector<int> adj[]) {
+		vis[node] = 1;
+		for (auto it : adj[node]) {
+			if (!vis[it]) dfs(it, vis, st, adj);
+		}
+		st.push(node);
+	}
+public:
+	//Function to return list containing vertices in Topological order.
+	vector<int> topoSort(int V, vector<int> adj[])
+	{
+		int vis[V] = {0};
+		stack<int> st;
+		for (int i = 0; i < V; i++) {
+			if (!vis[i]) {
+				dfs(i, vis, st, adj);
+			}
+		}
 
-        unordered_map<int,vector<int>> graph;
-        for(int i = 0; i < prerequisites.size(); i++) {
-            graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
-        }
-        vector<int> visited(numCourses);
-        vector<int> arrangedCourses(numCourses);
-        vector<int> family(numCourses);
-        int n = numCourses - 1;
-        for(int i = 0; i < numCourses; i++) {
-            if(visited[i] == 0) {
-                if(dfs(graph, i, visited, arrangedCourses, n, family) == true) {
-                    return {};
-                }
+		vector<int> ans;
+		while (!st.empty()) {
+			ans.push_back(st.top());
+			st.pop();
+		}
+		return ans;
+	}
+};
+
             }
         }
         return arrangedCourses;
