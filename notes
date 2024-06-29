@@ -1,1 +1,25 @@
 -finding no. of possible subarrays within l and r iss r - l
+- important: for finding no of  subarray with sum s :
+    no(sum atmost K)- no(sum atmost K-1)
+class Solution {
+public:
+
+    int atmostK(vector<int> &v, int goal)
+    {   
+        if(goal < 0) return 0;
+        int l = 0, r = 0, n = v.size(), ans = 0, s = 0;
+        for(; r < n; r++)
+        {
+            s += v[r];
+            while(s > goal) s -= v[l++];
+            ans += r - l + 1;
+        }
+        return ans;
+    }
+    int numSubarraysWithSum(vector<int>& v, int goal) {
+        return atmostK(v, goal) - atmostK(v, goal - 1);
+        //return c;
+    }
+};
+binary subarray with sum k
+refer this--------------
