@@ -1,0 +1,5 @@
+0/1 knapsack: 
+where u have to create a sum with elements that can be taken either 0 times or 1 times
+unbounded knapsack:
+u have infinite amount of every element to create the same sum
+eg: https://leetcode.com/problems/coin-change/description/
