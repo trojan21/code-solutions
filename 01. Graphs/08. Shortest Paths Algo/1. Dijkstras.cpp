@@ -1,4 +1,5 @@
-
+//not suitable for negative cycles-alternative bellman ford
+//not that efficient for multiple sources graphs
 #include <bits/stdc++.h>
 class Solution
 {
