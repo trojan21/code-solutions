@@ -13,42 +13,43 @@
 	Space Complexity :- O(E+V)
 
 */
-
+//pair of (weight and pair (of node, its parent))
+# define pp pair<int, pair<int, int>>
 #include<bits/stdc++.h>
 using namespace std;
 
-int minCostConnectPoints(vector<vector<int>>& points) {
-        int V = points.size();
-        vector<int> mst(V,0);
-        vector<int> key(V,INT_MAX);
-        vector<int> parent(V,-1);
-        int ans=0;
-        priority_queue<vector<int>> q;
-        q.push({0,0});
-        key[0]=0;
-    
-        while(q.size()) {
-            int u = q.top()[1];
-            mst[u]=1;
-            q.pop();
-            
-            for(int v=0;v<V;v++) {
-                if(v == u || mst[v] == 1 ) continue;
-                int w = abs(points[u][0]-points[v][0]) + abs(points[u][1]-points[v][1]);
-                if(w < key[v]) {
-                    key[v] = w;
-                    parent[v]=u;
-                    q.push({-key[v],v});
-                }
-            }
-        }
+int minCostConnectPoints(vector<vector<int>>& v) {
+	priority_queue<pp, vector<pp>, greater<pp>> pq;
+	int vis[v.size()] = {0};
+	pq.push({0, {0, -1}});
+	vector<pair<int, int>> mst;
+	int ans = 0;
+	while(!pq.empty())
+	{
+		auto it = pq.top();
+		int wt = it.first;
+		int node = it.second.first;
+		int parent = it.second.second;
+		pq.pop();
+		if(vis[node]) continue;
+		vis[node] = 1;
+		ans += wt;
+		if(parent!=-1)
+		mst.push_back({node, parent});
+		for (auto it : adj[node]) {
+			int adjNode = it[0];
+			int edW = it[1];
+			if (!vis[adjNode]) {
+				pq.push({edW, {adjNode, node});
+			}
+		}
+	}
+	return ans;
+	
+}
 
-        for(auto &a:key) {
-            ans+=a;
-        }
-        return ans;
-    }
 
+//here we are returning the minimum mst sum
 
 
 
