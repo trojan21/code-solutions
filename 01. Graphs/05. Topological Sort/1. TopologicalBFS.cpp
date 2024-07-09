@@ -1,32 +1,27 @@
-class Solution {
-public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int> orderedCourses;
-        unordered_map<int,vector<int>> graph;
-        vector<int> inDegree(numCourses);
-        for(auto prerequisite : prerequisites) {
-            graph[prerequisite[1]].push_back(prerequisite[0]);
-            inDegree[prerequisite[0]]++;
-        }
-        queue<int> topoQueue;
-        
-        for(int i = 0; i < numCourses; i++) {
-            if(inDegree[i] == 0) {
-                topoQueue.push(i);
-            }
-        }
-        while(topoQueue.size()) {
-            auto course = topoQueue.front();
-            topoQueue.pop();
-            orderedCourses.push_back(course);
-            for(auto nbr : graph[course]) {
-                inDegree[nbr]--;
-                if(inDegree[nbr] == 0)topoQueue.push(nbr);
-            }
-        }
-        if(orderedCourses.size() < numCourses) {
-            return {};
-        }
-        return orderedCourses;
+vector<int> topoSort(int V, vectorint> adj[])
+{
+    int indegree[v] = {0};
+    for(int i = 0; i < V; i++)
+        for(auto it: adj[i])
+            indegree[it]++;
+    queue<int> q;
+    for(int i = 0; i < V; i++){
+        if(indegree[i] == 0) 
+            q.push(i);
+
+    vector<int> topo;
+		while (!q.empty()) {
+			int node = q.front();
+			q.pop();
+			topo.push_back(node);
+			// node is in your topo sort
+			// so please remove it from the indegree
+
+			for (auto it : adj[node]) {
+				indegree[it]--;
+				if (indegree[it] == 0) q.push(it);
+			}
+		}
+
+		return topo;
     }
-};
