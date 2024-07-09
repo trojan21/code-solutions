@@ -1,33 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool detectCycle(unordered_map<int, vector<int>>& m, unordered_set<int>& visited, int node, int parent) {
-	visited.insert(node);
-	for(auto nbr: m[node]) {
-		if(visited.find(nbr) == visited.end()) {
-			if(detectCycle(m,visited,nbr,node)) return true;
-		}
-		else if(nbr != parent) {
-			return true;
-		}
-	}
-	return false;
-}
+int dfs(vector<int> adj[], int node, int parent, vector<int>& vis) {
+        vis[node] = 1;
+        for (auto edges : adj[node]) {
+            if (!vis[edges]) {
+                if (dfs(adj, edges, node, vis))
+                return 1;
+                    
+            } else if (parent != edges)
+                return 1;
+        }
+        return 0;
+    }
 
 bool solve(int n, vector<vector<int> > edges) 
 {	
-	unordered_map<int, vector<int>> graph;
+	vector<int> adj[n];
 
 	for(auto a: edges) {
-		graph[a[0]].push_back(a[1]);
-		graph[a[1]].push_back(a[0]);
+		adj[a[0]].push_back(a[1]);
+		adj[a[1]].push_back(a[0]);
 	}
-	unordered_set<int> visited;
-	for(int i = 1; i < n; i++) {
-	    if(visited.find(i) == visited.end()) {
-	        if(detectCycle(graph, visited, i, -1)) {
-	            return true;
-	        }
+	vector<int> vis(n,0);
+	for(int i = 0; i < n; i++) {
+	    if(!vis[i])
+	    {
+		    if(dfs(adj, i, -1, vis)) return true;
 	    }
 	    
 	}
