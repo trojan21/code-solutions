@@ -1,37 +1,57 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-bool detectCycle(unordered_map<int, vector<int>>& m, unordered_set<int>& visited, int node, int parent, unordered_set<int>& bag) {
-	visited.insert(node);
-	bag.insert(node);
-	for(auto nbr: m[node]) {
-	    if(bag.find(nbr) != bag.end()) return true;
-		else if(visited.find(nbr) == visited.end()) {
-	        if(detectCycle(m, visited, nbr, node, bag)) return true;
+class Solution {
+private:
+	bool dfsCheck(int node, vector<int> adj[], int vis[], int pathVis[]) {
+		vis[node] = 1;
+		pathVis[node] = 1;
+
+		// traverse for adjacent nodes
+		for (auto it : adj[node]) {
+			// when the node is not visited
+			if (!vis[it]) {
+				if (dfsCheck(it, adj, vis, pathVis) == true)
+					return true;
+			}
+			// if the node has been previously visited
+			// but it has to be visited on the same path
+			else if (pathVis[it]) {
+				return true;
+			}
 		}
-	}
-	bag.erase(node);
-	return false;
-}
 
-bool solve(int n, vector<vector<int> > edges) 
-{	
-	unordered_map<int, vector<int>> graph;
-
-	for(auto a: edges) {
-		graph[a[0]].push_back(a[1]);
+		pathVis[node] = 0;
+		return false;
 	}
-	unordered_set<int> visited;
-	unordered_set<int> bag;
-	for(int i = 1; i < n; i++) {
-	    if(visited.find(i) == visited.end()) {
-	        if(detectCycle(graph, visited, i, -1, bag)) {
-	            return true;
-	        }
-	    }
-	    
-	}
-	return false;
-	
+public:
+	// Function to detect cycle in a directed graph.
+	bool isCyclic(int V, vector<int> adj[]) {
+		int vis[V] = {0};
+		int pathVis[V] = {0};
 
+		for (int i = 0; i < V; i++) {
+			if (!vis[i]) {
+				if (dfsCheck(i, adj, vis, pathVis) == true) return true;
+			}
+		}
+		return false;
+	}
+};
+
+
+int main() {
+
+	// V = 11, E = 11;
+	vector<int> adj[11] = {{}, {2}, {3}, {4, 7}, {5}, {6}, {}, {5}, {9}, {10}, {8}};
+	int V = 11;
+	Solution obj;
+	bool ans = obj.isCyclic(V, adj);
+
+	if (ans)
+		cout << "True\n";
+	else
+		cout << "False\n";
+
+	return 0;
 }
