@@ -2,6 +2,7 @@
 	TC O(V^3)
 	SC O(N)
 	Give us the min distance btw each pair
+ 	to detect negative cycles check if dist[0][0] < 0
 */
 
 for (int i = 1; i <= n; i++) {
