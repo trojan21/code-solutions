@@ -7,23 +7,35 @@
     relax one more time to detect -ve cycle
     
 */
-
 class Solution {
-public:
-    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<int> dis(n+1,6000);
-        dis[k]=0;
-        int ans=INT_MIN;
-        for(int i=0;i<n-1;i++) {
-            for(auto &a:times) {
-                if(dis[a[1]]>dis[a[0]]+a[2]) {
-                    dis[a[1]]=dis[a[0]]+a[2];
-                }
+  public:
+    /*  Function to implement Bellman Ford
+    *   edges: vector of vectors which represents the graph
+    *   S: source vertex to start traversing graph with
+    *   V: number of vertices
+    */
+    vector<int> bellman_ford(int V, vector<vector<int>>& edges, int S) {
+        // Code here
+        vector<int> dist(V,1e8);
+        dist[S] = 0;
+        for(int i = 0; i < V-1; i++)
+        {
+            for(auto it: edges)
+            {
+                int u = it[0], v = it[1], wt = it[2];
+                if(dist[u] != 1e8 and dist[v] > wt + dist[u] )
+                    dist[v] = wt + dist[u];
             }
         }
-        for(int i=1;i<=n;i++) {
-            ans=max(ans,dis[i]);
+        
+        //checking if there's a negative cycle
+        //by n-1 the distance vector must have the minimum distances if the distances are still decreasing then there is a negative cycle
+        for(auto it: edges)
+        {
+            int u = it[0], v = it[1], wt = it[2];
+            if(dist[u] != 1e8 and dist[v] > wt + dist[u] )
+                return {-1};
         }
-        return ans==6000?-1:ans;
+        return dist;
     }
 };
