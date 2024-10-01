@@ -4,7 +4,8 @@
 	Give us the min distance btw each pair
  	to detect negative cycles check if dist[0][0] < 0
 */
-
+//first u create an adjacency matrix instead of the list
+// then u try going via different paths to the destination and find the minimum effort
 for (int i = 1; i <= n; i++) {
 	for (int j = 1; j <= n; j++) {
 		if (i == j) distance[i][j] = 0;
