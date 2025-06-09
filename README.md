@@ -1,6 +1,5 @@
-# 3-weeks-Google-Prep
 
-## [How I Cracked my Dream Company GOOGLE](https://youtu.be/YlP7CWpHgS4)
+## [How  ](https://youtu.be/YlP7CWpHgS4)
 
 ## [For rest of the topics I reffered my DSA Sheet Questions](https://www.youtube.com/watch?v=NXQi_g1pVqI/)
 
